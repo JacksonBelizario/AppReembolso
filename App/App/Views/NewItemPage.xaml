@@ -3,21 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:e="clr-namespace:App.Support;assembly=App"
              mc:Ignorable="d"
              x:Class="App.Views.NewItemPage"
-             Title="New Item">
+             Title="Nova Solicitação">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
-        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+        <ToolbarItem Text="Cancelar" Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="Enviar" Clicked="Save_Clicked" />
     </ContentPage.ToolbarItems>
-    
+    <ContentPage.Resources>
+        <e:CurrencyConverter x:Key="CurrencyConverter" />
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" d:Text="Item name" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small" Margin="0" />
+            <Label Text="Data da Compra" FontSize="Small" />
+            <DatePicker Date="{Binding DataDaCompra}" />
+            <Label Text="Descrição" FontSize="Medium" />
+            <Entry Text="{Binding Item.Descricao}" d:Text="Descrição" FontSize="Small" />
+            <Label Text="Anexo" FontSize="Medium" />
+            <Editor Text="{Binding Item.Anexo}" d:Text="Anexo" FontSize="Small" Margin="0" />
+            <Label Text="Valor" FontSize="Medium" />
+            <Entry Keyboard="Numeric" Text="{Binding Item.Valor, Converter={StaticResource CurrencyConverter}}" />
         </StackLayout>
     </ContentPage.Content>
     

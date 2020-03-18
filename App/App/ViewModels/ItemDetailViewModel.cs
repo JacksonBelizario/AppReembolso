@@ -6,10 +6,10 @@ namespace App.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {
-        public Item Item { get; set; }
-        public ItemDetailViewModel(Item item = null)
+        public Solicitacao Item { get; set; }
+        public ItemDetailViewModel(Solicitacao item = null)
         {
-            Title = item?.Text;
+            Title = item?.DataDaSolicitacao.ToString();
             Item = item;
         }
     }

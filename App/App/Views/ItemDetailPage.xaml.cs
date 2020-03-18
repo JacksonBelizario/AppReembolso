@@ -26,10 +26,10 @@ namespace App.Views
         {
             InitializeComponent();
 
-            var item = new Item
+            var item = new Solicitacao
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Descricao = "Item 1",
+                Anexo = "This is an item description."
             };
 
             viewModel = new ItemDetailViewModel(item);

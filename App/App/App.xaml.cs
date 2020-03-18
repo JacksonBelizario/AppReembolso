@@ -12,18 +12,15 @@ namespace App
         //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
         //To debug on Android emulators run the web backend against .NET Core not IIS
         //If using other emulators besides stock Google images you may need to adjust the IP address
-        public static string AzureBackendUrl =
+        public static string BackendUrl =
             DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.0.103:8000" : "http://localhost:5000";
-        public static bool UseMockDataStore = false;
 
         public App()
         {
             InitializeComponent();
 
-            if (UseMockDataStore)
-                DependencyService.Register<MockDataStore>();
-            else
-                DependencyService.Register<AzureDataStore>();
+            DependencyService.Register<SolicitacaoDataStore>();
+
             MainPage = new MainPage();
         }
 

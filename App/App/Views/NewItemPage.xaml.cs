@@ -13,16 +13,20 @@ namespace App.Views
     [DesignTimeVisible(false)]
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Solicitacao Item { get; set; }
 
         public NewItemPage()
         {
             InitializeComponent();
 
-            Item = new Item
+            Item = new Solicitacao
             {
-                Text = "Item name",
-                Description = "This is an item description."
+                DataDaSolicitacao = DateTime.UtcNow,
+                DataDaCompra = DateTime.UtcNow,
+                Categoria = 1,
+                Descricao = "",
+                Anexo = "",
+                Valor = 0
             };
 
             BindingContext = this;
