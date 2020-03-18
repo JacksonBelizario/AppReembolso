@@ -1,13 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using App.Models;
+using App.Web.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Web
 {
@@ -25,6 +23,15 @@ namespace App.Web
         {
             services.AddControllers();
             services.AddSingleton<IItemRepository, ItemRepository>();
+
+
+            // var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var connectionString = "host=localhost;port=5432;database=apireembolso;username=usuario;password=usuario";
+            services.AddDbContext<SistemaDbContext>(options =>
+                options.UseNpgsql(
+                    connectionString
+                )
+            );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
