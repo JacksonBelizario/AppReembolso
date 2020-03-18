@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using App.Models;
 using App.Web.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace App.Web
 {
@@ -25,8 +26,8 @@ namespace App.Web
             services.AddSingleton<IItemRepository, ItemRepository>();
 
 
-            // var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-            var connectionString = "host=localhost;port=5432;database=apireembolso;username=usuario;password=usuario";
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            // var connectionString = "host=localhost;port=5432;database=apireembolso;username=usuario;password=usuario";
             services.AddDbContext<SistemaDbContext>(options =>
                 options.UseNpgsql(
                     connectionString

@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: "usuario"
       POSTGRES_PASSWORD: "usuario"
-      POSTGRES_DB: "sistemadeponto"
+      POSTGRES_DB: "apireembolso"
     volumes:
       - db_volume:/var/lib/postgresql/data
       - db_init:/docker-entrypoint-initdb.d

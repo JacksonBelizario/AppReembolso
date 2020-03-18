@@ -17,4 +17,4 @@ EXPOSE 80
 
 COPY --from=build /app/out .
 
-ENTRYPOINT ["dotnet", "App.dll"]
+ENTRYPOINT ["dotnet", "App.Web.dll"]
