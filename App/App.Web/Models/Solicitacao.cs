@@ -13,6 +13,7 @@ namespace App.Web.Models
         public int Latitude { get; set; }
         public int Longitude { get; set; }
         public string Anexo { get; set; }
+        public int Status { get; set; }
 
     }
 }

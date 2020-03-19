@@ -55,6 +55,10 @@ namespace App.Web.Migrations
                         .HasColumnName("longitude")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Status")
+                        .HasColumnName("status")
+                        .HasColumnType("integer");
+
                     b.Property<double>("Valor")
                         .HasColumnName("valor")
                         .HasColumnType("double precision");

@@ -21,7 +21,8 @@ namespace App.Web.Migrations
                     descricao = table.Column<string>(nullable: true),
                     latitude = table.Column<int>(nullable: false),
                     longitude = table.Column<int>(nullable: false),
-                    anexo = table.Column<string>(nullable: true)
+                    anexo = table.Column<string>(nullable: true),
+                    status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

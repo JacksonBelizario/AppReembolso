@@ -21,6 +21,7 @@ namespace App.Web.Maps
             entityBuilder.Property(x => x.Latitude).HasColumnName("latitude");
             entityBuilder.Property(x => x.Longitude).HasColumnName("longitude");
             entityBuilder.Property(x => x.Anexo).HasColumnName("anexo");
+            entityBuilder.Property(x => x.Status).HasColumnName("status");
         }
     }
 }

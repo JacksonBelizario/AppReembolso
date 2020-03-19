@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:e="clr-namespace:App.Support;assembly=App"
+             xmlns:support="clr-namespace:App.Support;assembly=App"
              mc:Ignorable="d"
              x:Class="App.Views.NewItemPage"
              Title="Nova Solicitação">
@@ -13,19 +13,21 @@
         <ToolbarItem Text="Enviar" Clicked="Save_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
-        <e:CurrencyConverter x:Key="CurrencyConverter" />
+        <support:CurrencyConverter x:Key="CurrencyConverter" />
+        <support:IntEnumConverter x:Key="IntEnum"/>
     </ContentPage.Resources>
-
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Data da Compra" FontSize="Small" />
+        <StackLayout Padding="15">
+            <Label Text="Categoria" />
+            <Picker ItemsSource="{Binding ListaCategorias}" SelectedIndex="{Binding Item.Categoria, Converter={StaticResource IntEnum}}"/>
+            <Label Text="Data da Compra" />
             <DatePicker Date="{Binding DataDaCompra}" />
-            <Label Text="Descrição" FontSize="Medium" />
-            <Entry Text="{Binding Item.Descricao}" d:Text="Descrição" FontSize="Small" />
-            <Label Text="Anexo" FontSize="Medium" />
-            <Editor Text="{Binding Item.Anexo}" d:Text="Anexo" FontSize="Small" Margin="0" />
-            <Label Text="Valor" FontSize="Medium" />
+            <Label Text="Descrição" />
+            <Entry Text="{Binding Item.Descricao}" />
+            <Label Text="Valor" />
             <Entry Keyboard="Numeric" Text="{Binding Item.Valor, Converter={StaticResource CurrencyConverter}}" />
+            <Label Text="Anexo" />
+            <Editor Text="{Binding Item.Anexo}" d:Text="Anexo" Margin="0" />
         </StackLayout>
     </ContentPage.Content>
     

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Linq;
 
 using App.Models;
+using static App.Web.Models.Enums;
 
 namespace App.Views
 {
@@ -14,6 +16,7 @@ namespace App.Views
     public partial class NewItemPage : ContentPage
     {
         public Solicitacao Item { get; set; }
+        public List<string> ListaCategorias => Enum.GetNames(typeof(Categorias)).ToList();
 
         public NewItemPage()
         {
@@ -23,10 +26,11 @@ namespace App.Views
             {
                 DataDaSolicitacao = DateTime.UtcNow,
                 DataDaCompra = DateTime.UtcNow,
-                Categoria = 1,
+                Categoria = (Categorias)1,
                 Descricao = "",
                 Anexo = "",
-                Valor = 0
+                Valor = 0,
+                Status = (Status)0,
             };
 
             BindingContext = this;
