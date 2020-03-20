@@ -72,9 +72,9 @@ namespace App.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(int id)
         {
-            if (string.IsNullOrEmpty(id) && !IsConnected)
+            if (id == 0 && !IsConnected)
                 return false;
 
             var response = await client.DeleteAsync($"api/solicitacao/{id}");

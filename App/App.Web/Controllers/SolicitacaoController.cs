@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using App.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static App.Web.Models.Enums;
 
 namespace App.Web.Controllers
 {
@@ -22,7 +23,7 @@ namespace App.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacoes()
         {
-            return await _context.Solicitacoes.ToListAsync();
+            return await _context.Solicitacoes.Where(e => e.Status != (int)Status.Excluida).ToListAsync();
         }
 
         // GET: api/Solicitacoes/5
@@ -94,7 +95,10 @@ namespace App.Web.Controllers
                 return NotFound();
             }
 
-            _context.Solicitacoes.Remove(solicitacao);
+            solicitacao.Status = (int)Status.Excluida;
+
+            _context.Entry(solicitacao).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
 
             return solicitacao;

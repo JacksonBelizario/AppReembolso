@@ -5,6 +5,7 @@ using Xamarin.Forms.Xaml;
 
 using App.Models;
 using App.ViewModels;
+using System.Diagnostics;
 
 namespace App.Views
 {
@@ -13,7 +14,7 @@ namespace App.Views
     [DesignTimeVisible(false)]
     public partial class ItemDetailPage : ContentPage
     {
-        ItemDetailViewModel viewModel;
+        readonly ItemDetailViewModel viewModel;
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
@@ -28,12 +29,21 @@ namespace App.Views
 
             var item = new Solicitacao
             {
-                Descricao = "Item 1",
-                Anexo = "This is an item description."
+                Descricao = "",
+                Anexo = ""
             };
 
             viewModel = new ItemDetailViewModel(item);
             BindingContext = viewModel;
+        }
+
+        async void DelItem_Clicked(object sender, EventArgs e)
+        {
+            bool answer = await DisplayAlert("Remover?", "Deseja excluir a solicitação?", "Sim", "Não");
+            if (answer)
+            {
+                await viewModel.DelItem();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:support="clr-namespace:App.Support;assembly=App"
              mc:Ignorable="d"
              x:Class="App.Views.ItemsPage"
              Title="{Binding Title}"
@@ -11,6 +12,10 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Novo" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <support:CurrencyConverter x:Key="CurrencyConverter" />
+        <support:StatusToColorConverter x:Key="StatusToColorConverter" />
+    </ContentPage.Resources>
 
     <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
         <CollectionView x:Name="ItemsCollectionView"
@@ -28,58 +33,57 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10">
-                        <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <FlexLayout
-                                Grid.Row="0"
-                                Grid.Column="0" >
-                                <Label Text="ID: " />
-                                <Label Text="{Binding Id}" 
-                                d:Text="{Binding .}"
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            </FlexLayout>
-                            <FlexLayout
-                                Grid.Row="0"
-                                Grid.Column="1" >
-                                <Label Text="Valor: " />
+                        <FlexLayout
+                                JustifyContent="SpaceBetween" >
+                            <StackLayout Padding="0"  Orientation="Horizontal">
+                                <Label Text="{Binding Id}"
+                                    d:Text="{Binding .}"
+                                    LineBreakMode="NoWrap" 
+                                    Style="{DynamicResource ListItemTextStyle}"
+                                    FontAttributes="Bold"
+                                    FontSize="16" />
+                                <Label Text="|" />
                                 <Label
-                                    Text="{Binding Valor}" 
-                                    d:Text="Valor"
+                                    Text="{Binding Categoria}"
                                     LineBreakMode="NoWrap"
                                     Style="{DynamicResource ListItemDetailTextStyle}"
-                                    FontSize="13" />
-                            </FlexLayout>
-                            <FlexLayout
-                                Grid.Row="1"
-                                Grid.Column="0" >
-                                <Label Text="Categoria: " />
-                                <Label
-                                    Text="{Binding Categoria}" 
-                                    d:Text="Categoria"
-                                    LineBreakMode="NoWrap"
-                                    Style="{DynamicResource ListItemDetailTextStyle}"
-                                    FontSize="13" />
-                            </FlexLayout>
-                            <FlexLayout
-                                Grid.Row="1"
-                                Grid.Column="1" >
-                                <Label Text="Status: " />
-                                <Label
-                                    Text="{Binding Status}" 
-                                    d:Text="Categoria"
-                                    LineBreakMode="NoWrap"
-                                    Style="{DynamicResource ListItemDetailTextStyle}"
-                                    FontSize="13" />
-                            </FlexLayout>
-                        </Grid>
+                                    FontAttributes="Bold"
+                                    FontSize="16" />
+                            </StackLayout>
+                            <Frame CornerRadius="15" 
+                                HorizontalOptions="Center"
+                                VerticalOptions="End"
+                                HasShadow="True"
+                                IsClippedToBounds="True"
+                                Padding="0">
+                                <StackLayout
+                                    Padding="10"
+                                    Orientation="Horizontal"
+                                    BackgroundColor="{Binding Status, Converter={StaticResource StatusToColorConverter}}">
+                                </StackLayout>
+                            </Frame>
+                        </FlexLayout>
+                        <FlexLayout
+                                JustifyContent="SpaceBetween" >
+                            <Label
+                                Text="{Binding Valor, Converter={StaticResource CurrencyConverter}}" 
+                                d:Text="Valor"
+                                TextColor="Green"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                            <Label
+                                Text="{Binding Status}" 
+                                d:Text="Categoria"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13" />
+                        </FlexLayout>
+                        <BoxView
+                            VerticalOptions="Center"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="1"
+                            Color="#dddddd" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"></TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>

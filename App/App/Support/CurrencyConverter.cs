@@ -20,10 +20,8 @@ namespace App.Support
 
             if (valueFromString.Length <= 0)
                 return 0m;
-            
-            long valueLong;
 
-            if (!long.TryParse(valueFromString, out valueLong))
+            if (!long.TryParse(valueFromString, out long valueLong))
                 return 0m;
 
             if (valueLong <= 0)

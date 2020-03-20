@@ -39,9 +39,9 @@ namespace App.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(int id)
         {
-            var oldItem = items.Where((Item arg) => arg.Id == id).FirstOrDefault();
+            var oldItem = items.Where((Item arg) => arg.Id == id.ToString()).FirstOrDefault();
             items.Remove(oldItem);
 
             return await Task.FromResult(true);

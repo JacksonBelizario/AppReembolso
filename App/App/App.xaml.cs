@@ -13,7 +13,7 @@ namespace App
         //To debug on Android emulators run the web backend against .NET Core not IIS
         //If using other emulators besides stock Google images you may need to adjust the IP address
         public static string BackendUrl =
-            DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.0.103:8000" : "http://localhost:5000";
+            DeviceInfo.Platform == DevicePlatform.Android ? "http://192.168.0.107:8000" : "http://localhost:5000";
 
         public App()
         {
