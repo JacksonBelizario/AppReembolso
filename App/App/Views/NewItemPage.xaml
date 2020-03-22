@@ -28,6 +28,8 @@
             <Entry Keyboard="Numeric" Text="{Binding Item.Valor, Converter={StaticResource CurrencyConverter}}" />
             <Label Text="Anexo" />
             <Editor Text="{Binding Item.Anexo}" d:Text="Anexo" Margin="0" />
+            <Button Text="Tirar Foto" Clicked="TirarFoto" FontSize="20" />
+            <Image x:Name="MinhaImagem" />
         </StackLayout>
     </ContentPage.Content>
     

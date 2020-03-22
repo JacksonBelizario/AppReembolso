@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Linq;
 
 using App.Models;
 using static App.Web.Models.Enums;
 using Xamarin.Essentials;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 
 namespace App.Views
 {
@@ -63,6 +64,43 @@ namespace App.Views
             {
                 // Tratando erro de permissão
                 await DisplayAlert("Erro: ", pEx.Message, "Ok");
+            }
+            catch (Exception ex)
+            {
+                // Não foi possivel obter a localização
+                await DisplayAlert("Erro : ", ex.Message, "Ok");
+            }
+        }
+
+        private async void TirarFoto(object sender, EventArgs e)
+        {
+            try
+            {
+                await CrossMedia.Current.Initialize();
+
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await DisplayAlert("Ops", "Nenhuma câmera detectada.", "OK");
+                    return;
+                }
+
+                var foto = await CrossMedia.Current.TakePhotoAsync(
+                    new StoreCameraMediaOptions
+                    {
+                        SaveToAlbum = true,
+                        Directory = "Solicitacoes"
+                    });
+
+                if (foto == null)
+                    return;
+
+                MinhaImagem.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = foto.GetStream();
+                    foto.Dispose();
+                    return stream;
+
+                });
             }
             catch (Exception ex)
             {
