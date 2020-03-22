@@ -13,10 +13,5 @@ namespace App.ViewModels
             Title = item?.Id + " | " + item?.Categoria.ToString();
             Item = item;
         }
-
-        public async Task<bool> DelItem()
-        {
-            return await DataStore.DeleteItemAsync(Item.Id);
-        }
     }
 }

@@ -42,7 +42,8 @@ namespace App.Views
             bool answer = await DisplayAlert("Remover?", "Deseja excluir a solicitação?", "Sim", "Não");
             if (answer)
             {
-                await viewModel.DelItem();
+                MessagingCenter.Send(this, "DelItem", viewModel.Item);
+                await Navigation.PopAsync();
             }
         }
     }

@@ -23,11 +23,13 @@ namespace App.Services
             };
         }
 
-        public async Task<bool> AddItemAsync(Item item)
+        public async Task<Item> AddItemAsync(Item item)
         {
             items.Add(item);
 
-            return await Task.FromResult(true);
+            await Task.FromResult(true);
+
+            return item;
         }
 
         public async Task<bool> UpdateItemAsync(Item item)

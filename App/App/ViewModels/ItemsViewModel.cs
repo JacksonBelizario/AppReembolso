@@ -24,8 +24,15 @@ namespace App.ViewModels
             MessagingCenter.Subscribe<NewItemPage, Solicitacao>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = item as Solicitacao;
-                Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                var itemDb = await DataStore.AddItemAsync(newItem);
+                Items.Add(itemDb);
+            });
+
+            MessagingCenter.Subscribe<ItemDetailPage, Solicitacao>(this, "DelItem", async (obj, item) =>
+            {
+                var oldItem = item as Solicitacao;
+                Items.Remove(oldItem);
+                await DataStore.DeleteItemAsync(oldItem.Id);
             });
         }
 

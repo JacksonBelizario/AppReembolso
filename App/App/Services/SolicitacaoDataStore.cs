@@ -46,16 +46,19 @@ namespace App.Services
             return null;
         }
 
-        public async Task<bool> AddItemAsync(Solicitacao item)
+        public async Task<Solicitacao> AddItemAsync(Solicitacao item)
         {
             if (item == null || !IsConnected)
-                return false;
+                return null;
 
             var serializedItem = JsonConvert.SerializeObject(item);
 
             var response = await client.PostAsync($"api/solicitacao", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
 
-            return response.IsSuccessStatusCode;
+            var contents = await response.Content.ReadAsStringAsync();
+
+            return await Task.Run(() => JsonConvert.DeserializeObject<Solicitacao>(contents));
+            // return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> UpdateItemAsync(Solicitacao item)
