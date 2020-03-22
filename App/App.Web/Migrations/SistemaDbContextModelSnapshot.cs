@@ -47,13 +47,13 @@ namespace App.Web.Migrations
                         .HasColumnName("descricao")
                         .HasColumnType("text");
 
-                    b.Property<int>("Latitude")
+                    b.Property<double>("Latitude")
                         .HasColumnName("latitude")
-                        .HasColumnType("integer");
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("Longitude")
+                    b.Property<double>("Longitude")
                         .HasColumnName("longitude")
-                        .HasColumnType("integer");
+                        .HasColumnType("double precision");
 
                     b.Property<int>("Status")
                         .HasColumnName("status")

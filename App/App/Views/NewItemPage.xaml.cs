@@ -7,6 +7,7 @@ using System.Linq;
 
 using App.Models;
 using static App.Web.Models.Enums;
+using Xamarin.Essentials;
 
 namespace App.Views
 {
@@ -36,15 +37,38 @@ namespace App.Views
             BindingContext = this;
         }
 
-        async void Save_Clicked(object sender, EventArgs e)
-        {
-            MessagingCenter.Send(this, "AddItem", Item);
-            await Navigation.PopModalAsync();
-        }
-
         async void Cancel_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
+        }
+        public async void Save_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var localizacao = await Geolocation.GetLastKnownLocationAsync();
+                if (localizacao != null)
+                {
+                    Item.Latitude = localizacao.Latitude;
+                    Item.Longitude = localizacao.Longitude;
+                }
+                MessagingCenter.Send(this, "AddItem", Item);
+                await Navigation.PopModalAsync();
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Recurso não suportado no dispositivo
+                await DisplayAlert("Erro: ", fnsEx.Message, "Ok");
+            }
+            catch (PermissionException pEx)
+            {
+                // Tratando erro de permissão
+                await DisplayAlert("Erro: ", pEx.Message, "Ok");
+            }
+            catch (Exception ex)
+            {
+                // Não foi possivel obter a localização
+                await DisplayAlert("Erro : ", ex.Message, "Ok");
+            }
         }
     }
 }

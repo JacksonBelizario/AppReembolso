@@ -19,8 +19,8 @@ namespace App.Web.Migrations
                     valor = table.Column<double>(nullable: false),
                     categoria = table.Column<int>(nullable: false),
                     descricao = table.Column<string>(nullable: true),
-                    latitude = table.Column<int>(nullable: false),
-                    longitude = table.Column<int>(nullable: false),
+                    latitude = table.Column<double>(nullable: false),
+                    longitude = table.Column<double>(nullable: false),
                     anexo = table.Column<string>(nullable: true),
                     status = table.Column<int>(nullable: false)
                 },

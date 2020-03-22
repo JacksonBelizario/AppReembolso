@@ -11,8 +11,8 @@ namespace App.Models
         public double Valor { get; set; }
         public Categorias Categoria { get; set; }
         public string Descricao { get; set; }
-        public int Latitude { get; set; }
-        public int Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string Anexo { get; set; }
         public Status Status { get; set; }
 

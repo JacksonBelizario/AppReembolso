@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.Web.Migrations
 {
     [DbContext(typeof(SistemaDbContext))]
-    [Migration("20200319030843_InitialCreate")]
+    [Migration("20200322003903_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,13 +49,13 @@ namespace App.Web.Migrations
                         .HasColumnName("descricao")
                         .HasColumnType("text");
 
-                    b.Property<int>("Latitude")
+                    b.Property<double>("Latitude")
                         .HasColumnName("latitude")
-                        .HasColumnType("integer");
+                        .HasColumnType("double precision");
 
-                    b.Property<int>("Longitude")
+                    b.Property<double>("Longitude")
                         .HasColumnName("longitude")
-                        .HasColumnType("integer");
+                        .HasColumnType("double precision");
 
                     b.Property<int>("Status")
                         .HasColumnName("status")
