@@ -30,6 +30,7 @@
             <Editor Text="{Binding Item.Anexo}" d:Text="Anexo" Margin="0" />
             <Button Text="Tirar Foto" Clicked="TirarFoto" FontSize="20" />
             <Image x:Name="MinhaImagem" />
+            <Label x:Name="RemoteUrl" />
         </StackLayout>
     </ContentPage.Content>
     

@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Web.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static App.Web.Models.Enums;
@@ -13,10 +17,12 @@ namespace App.Web.Controllers
     public class SolicitacaoController : ControllerBase
     {
         private readonly SistemaDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public SolicitacaoController(SistemaDbContext context)
+        public SolicitacaoController(SistemaDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: api/Solicitacoes
@@ -102,6 +108,62 @@ namespace App.Web.Controllers
             await _context.SaveChangesAsync();
 
             return solicitacao;
+        }
+
+        [HttpPost("upload")]
+        public async Task<string> OnPostUploadAsync(List<IFormFile> files)
+        {
+            try
+            {
+                string folder = Path.GetFullPath("~/Uploads");
+                string uploadsFolder = Path.GetDirectoryName(folder);
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                long size = files.Sum(f => f.Length);
+
+                foreach (var formFile in files)
+                {
+                    if (formFile.Length > 0)
+                    {
+
+                        var filePath = Path.GetTempFileName();
+
+                        // Randomize the filename everytime so we don't overwrite files
+                        string randomFile = Path.GetFileNameWithoutExtension(filePath)
+                                            + "_"
+                                            + Guid.NewGuid().ToString().Substring(0, 4)
+                                            + Path.GetExtension(filePath);
+
+                        string targetFile = Path.GetFullPath(Path.Combine(uploadsFolder, randomFile));
+
+                        using (var destinationStream = System.IO.File.Create(targetFile))
+                        {
+                            await formFile.CopyToAsync(destinationStream);
+                        }
+
+                        return "/Uploads/" + randomFile;
+                       /* using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }*/
+                    }
+                }
+
+            } catch(Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return "";
+
+            // Process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+           //  return Ok(new { count = files.Count, size });
         }
 
         private bool SolicitacaoExists(int id)

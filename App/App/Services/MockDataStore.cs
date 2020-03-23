@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Models;
@@ -57,6 +58,11 @@ namespace App.Services
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(items);
+        }
+
+        public Task<string> UploadFile(Stream stream)
+        {
+            throw new NotImplementedException();
         }
     }
 }

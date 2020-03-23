@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
 using App.Models;
+using System.IO;
 
 namespace App.Services
 {
@@ -83,6 +84,22 @@ namespace App.Services
             var response = await client.DeleteAsync($"api/solicitacao/{id}");
 
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<string> UploadFile(Stream file)
+        {
+            if (file == null || !IsConnected)
+                return "";
+
+            var response = await client.PostAsync($"api/solicitacao/upload", new MultipartFormDataContent
+            {
+                new StreamContent(file)
+            });
+
+            return await response.Content.ReadAsStringAsync();
+
+            //return await Task.Run(() => JsonConvert.DeserializeObject<Solicitacao>(contents));
+            // return response.IsSuccessStatusCode;
         }
     }
 }

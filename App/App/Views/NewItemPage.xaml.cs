@@ -9,6 +9,7 @@ using static App.Web.Models.Enums;
 using Xamarin.Essentials;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using App.ViewModels;
 
 namespace App.Views
 {
@@ -17,6 +18,7 @@ namespace App.Views
     [DesignTimeVisible(false)]
     public partial class NewItemPage : ContentPage
     {
+        readonly BaseViewModel viewModel;
         public Solicitacao Item { get; set; }
         public List<string> ListaCategorias => Enum.GetNames(typeof(Categorias)).ToList();
 
@@ -35,7 +37,8 @@ namespace App.Views
                 Status = (Status)0,
             };
 
-            BindingContext = this;
+            //BindingContext = this;
+            BindingContext = viewModel = new BaseViewModel();
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
@@ -101,6 +104,8 @@ namespace App.Views
                     return stream;
 
                 });
+
+                // RemoteUrl.Text = await viewModel.DataStore.UploadFile(foto.GetStream());
             }
             catch (Exception ex)
             {
