@@ -1,11 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
 using App.Models;
 using App.ViewModels;
-using System.Diagnostics;
 
 namespace App.Views
 {
@@ -27,11 +24,7 @@ namespace App.Views
         {
             InitializeComponent();
 
-            var item = new Solicitacao
-            {
-                Descricao = "",
-                Anexo = ""
-            };
+            var item = new Solicitacao();
 
             viewModel = new ItemDetailViewModel(item);
             BindingContext = viewModel;

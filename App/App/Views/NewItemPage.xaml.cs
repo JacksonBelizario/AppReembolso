@@ -1,9 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-
-using App.Models;
-using static App.Web.Models.Enums;
 using Xamarin.Essentials;
 using Plugin.Media;
 using Plugin.Media.Abstractions;

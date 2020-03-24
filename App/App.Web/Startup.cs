@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using App.Models;
 using App.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,8 +24,6 @@ namespace App.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IItemRepository, ItemRepository>();
-
 
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
             // var connectionString = "host=localhost;port=5432;database=apireembolso;username=usuario;password=usuario";
