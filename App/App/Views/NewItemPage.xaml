@@ -27,10 +27,9 @@
             <Label Text="Valor" />
             <Entry Keyboard="Numeric" Text="{Binding Item.Valor, Converter={StaticResource CurrencyConverter}}" />
             <Label Text="Anexo" />
-            <Editor Text="{Binding Item.Anexo}" d:Text="Anexo" Margin="0" />
+            <Label x:Name="Anexo" />
             <Button Text="Tirar Foto" Clicked="TirarFoto" FontSize="20" />
             <Image x:Name="MinhaImagem" />
-            <Label x:Name="RemoteUrl" />
         </StackLayout>
     </ContentPage.Content>
     

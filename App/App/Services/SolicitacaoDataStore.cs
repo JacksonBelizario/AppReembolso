@@ -7,18 +7,22 @@ using Newtonsoft.Json;
 using Xamarin.Essentials;
 using App.Models;
 using System.IO;
+using System.Net.Http.Headers;
+using Plugin.Media.Abstractions;
 
 namespace App.Services
 {
     class SolicitacaoDataStore : IDataStore<Solicitacao>
     {
-        HttpClient client;
+        readonly HttpClient client;
         IEnumerable<Solicitacao> items;
 
         public SolicitacaoDataStore()
         {
-            client = new HttpClient();
-            client.BaseAddress = new Uri($"{App.BackendUrl}/");
+            client = new HttpClient
+            {
+                BaseAddress = new Uri($"{App.BackendUrl}/")
+            };
 
             items = new List<Solicitacao>();
         }
@@ -86,20 +90,22 @@ namespace App.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<string> UploadFile(Stream file)
+        public async Task<string> UploadFile(MediaFile media)
         {
-            if (file == null || !IsConnected)
+            System.Diagnostics.Debug.WriteLine("UploadFile");
+            if (media == null || !IsConnected)
                 return "";
 
-            var response = await client.PostAsync($"api/solicitacao/upload", new MultipartFormDataContent
+            var content = new MultipartFormDataContent();
+            var streamContent = new StreamContent(media.GetStream());
+            content.Add(streamContent, "\"files\"", $"\"{media.Path}\"");
+
+            using (var response = await client.PostAsync($"api/solicitacao/upload", content))
             {
-                new StreamContent(file)
-            });
+                return await response.Content.ReadAsStringAsync();
+            }
 
-            return await response.Content.ReadAsStringAsync();
 
-            //return await Task.Run(() => JsonConvert.DeserializeObject<Solicitacao>(contents));
-            // return response.IsSuccessStatusCode;
         }
     }
 }

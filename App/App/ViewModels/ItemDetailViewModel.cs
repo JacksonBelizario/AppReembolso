@@ -9,7 +9,6 @@ namespace App.ViewModels
         public Solicitacao Item { get; set; }
         public ItemDetailViewModel(Solicitacao item = null)
         {
-            // Title = item?.DataDaSolicitacao.ToString();
             Title = item?.Id + " | " + item?.Categoria.ToString();
             Item = item;
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Models;
+using Plugin.Media.Abstractions;
 
 namespace App.Services
 {
@@ -60,7 +60,7 @@ namespace App.Services
             return await Task.FromResult(items);
         }
 
-        public Task<string> UploadFile(Stream stream)
+        public Task<string> UploadFile(MediaFile stream)
         {
             throw new NotImplementedException();
         }

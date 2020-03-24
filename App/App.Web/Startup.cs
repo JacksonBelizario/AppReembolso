@@ -7,6 +7,8 @@ using App.Models;
 using App.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace App.Web
 {
@@ -44,6 +46,26 @@ namespace App.Web
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseStaticFiles();
+
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(uploadsFolder),
+                RequestPath = "/uploads"
+            });
+
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(uploadsFolder),
+                RequestPath = "/uploads"
+            });
 
             app.UseEndpoints(endpoints =>
             {
